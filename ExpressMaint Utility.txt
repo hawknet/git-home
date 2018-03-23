@@ -1,0 +1,30 @@
+1) Full Database Backup of all user databases to c:\backups, verify the backups and report to c:\reports keeping backups for 1 day and reports for 1 week and continue processing other databases if an error is encountered baking up a database
+
+expressmaint -S (local)\SQLExpress -D ALL_USER -T DB -R c:\reports 
+	-RU WEEKS -RV 1 -B c:\backups -BU DAYS -BV 1 -V -C
+2) Full Database Backup of all system databases to c:\backups, verify the backups and report to c:\reports keeping backups for 1 week and reports for 1 week
+
+expressmaint -S (local)\SQLExpress -D ALL_SYSTEM -T DB -R c:\reports 
+	-RU WEEKS -RV 1 -B c:\backups -BU DAYS -BV 1 -V
+3) Log Backup of all user databases to c:\backups, don't verify the backups and report to c:\reports keeping backups for 1 day and reports for 1 day
+
+expressmaint -S (local)\SQLExpress -D ALL_USER -T LOG -R c:\reports 
+	-RU DAYS -RV 1 -B c:\backups -BU DAYS -BV 1
+4) Check the integrity of the AdventureWorks database and report to c:\reports keeping reports for 1 week
+
+expressmaint -S (local)\SQLExpress -D AdventureWorks -T CHECKDB 
+	-R c:\reports -RU WEEKS -RV 1
+5) Rebuild all indexes in the AdventureWorks database and report to c:\reports keeping reports for 1 day
+
+expressmaint -S (local)\SQLExpress -D AdventureWorks -T REINDEX 
+	-R c:\reports -RU DAYS -RV 1
+6) Update all statistics with fullscan in the AdventureWorks database and report to c:\reports keeping reports for 1 day
+
+expressmaint -S (local)\SQLExpress -D AdventureWorks -T STATSFULL 
+	-R c:\reports -RU DAYS -RV 1
+7) A Full Backup of the AdventureWorks database specifiying a custom backup format to achieve a filename like AdventureWorks_foo_20091107.bak
+
+expressmaint -S (local)\SQLExpress -D AdventureWorks -T DB
+	-R c:\reports -RU DAYS -RV 1 -B c:\backups -BU DAYS -BV 1
+	-BF $(DB)_foo_$(DATE)
+
